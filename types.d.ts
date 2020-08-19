@@ -1,5 +1,5 @@
 interface Value {
-    children: string[];
+    imported: string[];
     root?: boolean;
 }
 

@@ -14,10 +14,10 @@ export default function createTree(tree = {}) {
     /**
      *
      * @param {string} src
-     * @returns {{children:string[],root?:boolean}}
+     * @returns {{imported:string[],root?:boolean}}
      */
     function get(src) {
-        return (tree[src] = tree[src] || { children: [] });
+        return (tree[src] = tree[src] || { imported: [], src });
     }
     /**
      * Set the index as Root
@@ -34,8 +34,8 @@ export default function createTree(tree = {}) {
      */
     function addChild(src, childSrc) {
         const item = get(childSrc);
-        if (!item.children.includes(childSrc) && src != childSrc) {
-            item.children.push(src);
+        if (!item.imported.includes(childSrc) && src != childSrc) {
+            item.imported.push(src);
         }
     }
     /**
@@ -47,7 +47,7 @@ export default function createTree(tree = {}) {
     function getParents(src, parents = []) {
         const item = get(src);
         const addParent = (src) => !parents.includes(src) && parents.push(src);
-        item.children.forEach((parentSrc) => {
+        item.imported.forEach((parentSrc) => {
             if (src != parentSrc) {
                 const item = get(parentSrc);
                 item.root && addParent(parentSrc);
@@ -62,11 +62,11 @@ export default function createTree(tree = {}) {
      */
     function remove(src) {
         for (let prop in tree) {
-            tree[prop].children.splice(
-                tree[prop].children.indexOf(src) >>> 0,
+            tree[prop].imported.splice(
+                tree[prop].imported.indexOf(src) >>> 0,
                 1
             );
-            if (!tree[prop].children.length && !tree[prop].root) {
+            if (!tree[prop].imported.length && !tree[prop].root) {
                 delete tree[prop];
             }
         }
