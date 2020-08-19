@@ -9,6 +9,7 @@ interface Tree {
 
 interface Context {
     tree: Tree;
+    has(str: string): boolean;
     get(str: string): Value;
     add(src: string): void;
     addChild(src: string, childSrc: string): void;

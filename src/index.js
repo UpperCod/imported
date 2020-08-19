@@ -6,6 +6,14 @@ export default function createTree(tree = {}) {
     /**
      *
      * @param {string} src
+     * @returns {boolean}
+     */
+    function has(src) {
+        return src in tree;
+    }
+    /**
+     *
+     * @param {string} src
      * @returns {{children:string[],root?:boolean}}
      */
     function get(src) {
@@ -67,6 +75,7 @@ export default function createTree(tree = {}) {
 
     return {
         tree,
+        has,
         get,
         add,
         addChild,

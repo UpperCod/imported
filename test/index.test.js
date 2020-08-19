@@ -8,6 +8,7 @@ test("Creation and association as root", async (t) => {
 
     t.deepEqual(tree.get("a"), tree.tree["a"]);
 
+    t.is(tree.has("a"), true);
     t.is(tree.get("a").root, true);
 });
 
