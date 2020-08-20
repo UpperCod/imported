@@ -47,12 +47,11 @@ export default function createTree(tree = {}) {
     function getParents(src, parents = []) {
         const item = get(src);
         const addParent = (src) => !parents.includes(src) && parents.push(src);
+        if (item.root) addParent(src);
         item.imported.forEach((parentSrc) => {
-            if (src != parentSrc) {
-                const item = get(parentSrc);
-                item.root && addParent(parentSrc);
-                getParents(parentSrc, parents);
-            }
+            const item = get(parentSrc);
+            item.root && addParent(parentSrc);
+            getParents(parentSrc, parents);
         });
         return parents;
     }
