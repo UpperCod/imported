@@ -19,7 +19,7 @@ test("Creation and association as child", async (t) => {
 
     tree.addChild("a", "b");
 
-    t.deepEqual(tree.  ("b"), ["a"]);
+    t.deepEqual(tree.getParents("b"), ["a"]);
 
     tree.addChild("b", "c");
 
