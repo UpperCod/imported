@@ -1,6 +1,6 @@
 {
-    "name": "@uppercod/index-tree",
-    "version": "1.1.2",
+    "name": "@uppercod/imported",
+    "version": "1.0.0",
     "description": "This script allows to create index relationships",
     "main": "cjs.js",
     "module": "esm.js",
@@ -15,14 +15,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/UpperCod/index-tree.git"
+        "url": "git+https://github.com/UpperCod/imported.git"
     },
     "author": "UpperCod",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/UpperCod/index-tree/issues"
+        "url": "https://github.com/UpperCod/imported/issues"
     },
-    "homepage": "https://github.com/UpperCod/index-tree#readme",
+    "homepage": "https://github.com/UpperCod/imported#readme",
     "dependencies": {},
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^8.1.0",

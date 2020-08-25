@@ -17,6 +17,6 @@ interface Context {
     remove(src: string): void;
 }
 
-declare module "@uppercod/tree-index" {
+declare module "@uppercod/imported" {
     export default function createTree(tree?: Tree): Context;
 }

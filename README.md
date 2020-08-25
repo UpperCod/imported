@@ -1,11 +1,11 @@
-# index-tree
+# imported
 
 This script allows to create index relationships, it is used by EStack to manage the dependency of printing files between documents.
 
 ## install
 
 ```
-npm install @uppercod/index-tree
+npm install @uppercod/imported
 ```
 
 ## example
@@ -13,9 +13,9 @@ npm install @uppercod/index-tree
 Check test/index.test.js for the api implementation.
 
 ```js
-import createTree from "@uppercod/index-tree";
+import createImported from "@uppercod/imported";
 
-const tree = createTree();
+const tree = createImported();
 
 tree.add("a");
 
