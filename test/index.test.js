@@ -19,12 +19,12 @@ test("Creation and association as child", async (t) => {
 
     tree.addChild("a", "b");
 
-    t.deepEqual(tree.getParents("b"), ["a"]);
+    t.deepEqual(tree.getRoots("b"), ["a"]);
 
     tree.addChild("b", "c");
 
-    t.deepEqual(tree.getParents("c"), ["a"]);
-    t.deepEqual(tree.getParents("a"), ["a"]);
+    t.deepEqual(tree.getRoots("c"), ["a"]);
+    t.deepEqual(tree.getRoots("a"), ["a"]);
 });
 
 test("Associative record deletion", async (t) => {
