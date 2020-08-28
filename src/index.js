@@ -60,6 +60,7 @@ export default function createTree(tree = {}) {
      * @param {string} src
      */
     function remove(src) {
+        if (!tree[src]) return;
         const { imported } = tree[src];
         delete tree[src];
         imported.forEach((src) => tree[src] && !tree[src].root && remove(src));
