@@ -1,6 +1,6 @@
 /**
  * Create a related index tree
- * @param {string} [tree] - Index map
+ * @param {tree} [tree] - Index map
  */
 export default function createTree(tree = {}) {
     /**
@@ -44,14 +44,14 @@ export default function createTree(tree = {}) {
      * @param {string[]} [parents]
      * @return {string[]}
      */
-    function getParents(src, parents = []) {
+    function getRoots(src, parents = []) {
         const item = get(src);
         const addParent = (src) => !parents.includes(src) && parents.push(src);
         if (item.root) addParent(src);
         item.imported.forEach((parentSrc) => {
             const item = get(parentSrc);
             item.root && addParent(parentSrc);
-            getParents(parentSrc, parents);
+            getRoots(parentSrc, parents);
         });
         return parents;
     }
@@ -60,16 +60,22 @@ export default function createTree(tree = {}) {
      * @param {string} src
      */
     function remove(src) {
-        for (let prop in tree) {
-            tree[prop].imported.splice(
-                tree[prop].imported.indexOf(src) >>> 0,
-                1
-            );
-            if (!tree[prop].imported.length && !tree[prop].root) {
-                delete tree[prop];
+        const { imported } = tree[src];
+        delete tree[src];
+        imported.forEach((src) => tree[src] && !tree[src].root && remove(src));
+        for (const prop in tree) {
+            if (!tree[prop].root && tree[prop].imported.includes(src))
+                remove(prop);
+        }
+    }
+
+    function graph(src, root = {}, ref = {}) {
+        for (const prop in tree) {
+            if (tree[prop].imported.includes(src)) {
+                root[prop] = ref[prop] || graph(prop, (ref[prop] = {}), ref);
             }
         }
-        delete tree[src];
+        return root;
     }
 
     return {
@@ -77,8 +83,20 @@ export default function createTree(tree = {}) {
         has,
         get,
         add,
+        graph,
         addChild,
-        getParents,
+        getRoots,
         remove,
     };
 }
+
+/**
+ * @typedef {Object} register
+ * @property {string} src
+ * @property {boolean} [root]
+ * @property {string[]} imported
+ */
+
+/**
+ * @typedef {{[src:string]:register}} tree
+ */

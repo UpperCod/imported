@@ -1,0 +1,23 @@
+<script type="module">
+import createTree from "./src/index.js";
+
+const tree = createTree();
+
+
+tree.add("a")
+tree.add("z")
+tree.addChild("a","b")
+tree.addChild("b","c")
+tree.addChild("c","f")
+tree.addChild("c","g")
+tree.addChild("g","j1")
+tree.addChild("g","j2")
+tree.addChild("g","j3")
+tree.addChild("z","j3")
+tree.addChild("j3","j1")
+tree.addChild("j1","j3")
+tree.addChild("j1","j2")
+tree.addChild("j1","c")
+
+
+</script>

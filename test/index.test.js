@@ -1,5 +1,5 @@
 import test from "ava";
-import createTree from "../esm";
+import createTree from "../src/index";
 
 test("Creation and association as root", async (t) => {
     const tree = createTree();
