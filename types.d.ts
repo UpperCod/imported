@@ -1,7 +1,8 @@
 declare module "@uppercod/imported" {
     export interface Value {
-        imported: string[];
+        src: string;
         root?: boolean;
+        imported: string[];
     }
 
     export interface Tree {
@@ -15,7 +16,7 @@ declare module "@uppercod/imported" {
         add(src: string): void;
         graph(src: string): object;
         addChild(src: string, childSrc: string): void;
-        getRoots(src: string, childSrc: string): void;
+        getRoots(src: string): void;
         remove(src: string): void;
     }
 
