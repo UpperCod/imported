@@ -19,5 +19,14 @@ tree.addChild("j1","j3")
 tree.addChild("j1","j2")
 tree.addChild("j1","c")
 
+const tree2 = createTree();
 
+tree2.add("a")
+tree2.add("z")
+tree2.addChild("a","b")
+tree2.addChild("b","c")
+
+tree2.merge(tree);
+
+console.log(tree2)
 </script>

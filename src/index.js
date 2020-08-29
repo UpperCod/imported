@@ -79,6 +79,23 @@ export default function createTree(tree = {}) {
         return root;
     }
 
+    function merge({ tree: _tree }) {
+        if (tree == _tree) return;
+        for (let prop in _tree) {
+            const imported = (tree[prop] && tree[prop].imported) || [];
+            tree[prop] = {
+                ...tree[prop],
+                ..._tree[prop],
+                imported: [
+                    ...imported,
+                    ..._tree[prop].imported.filter(
+                        (value) => !imported.includes(value)
+                    ),
+                ],
+            };
+        }
+    }
+
     return {
         tree,
         has,
@@ -88,6 +105,7 @@ export default function createTree(tree = {}) {
         addChild,
         getRoots,
         remove,
+        merge,
     };
 }
 
