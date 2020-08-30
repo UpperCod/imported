@@ -16,7 +16,7 @@ declare module "@uppercod/imported" {
         add(src: string): void;
         graph(src: string): object;
         addChild(src: string, childSrc: string): void;
-        getRoots(src: string): void;
+        getRoots(src: string): string[];
         remove(src: string): void;
     }
 
