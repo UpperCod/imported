@@ -1,22 +1,32 @@
 /**
  * Create a related index tree
- * @param {tree} [tree] - Index map
+ * @param {{tree?:tree,format?:(src:string)=>string}} [options] - Index map
  */
-export default function createTree(tree = {}) {
+export default function createTree({ tree = {}, format } = {}) {
+    const formatted = {};
+    /**
+     * normalize the src, to point correctly to the store
+     * @param {string} src
+     */
+    function id(src) {
+        formatted[src] = formatted[src] || (format ? format(src) : src);
+        return formatted[src];
+    }
     /**
      *
      * @param {string} src
      * @returns {boolean}
      */
     function has(src) {
-        return src in tree;
+        return id(src) in tree;
     }
     /**
      *
      * @param {string} src
-     * @returns {{imported:string[],root?:boolean}}
+     * @returns {{imported:string[],root?:boolean,src:string}}
      */
     function get(src) {
+        src = id(src);
         return (tree[src] = tree[src] || { imported: [], src });
     }
     /**
@@ -33,9 +43,9 @@ export default function createTree(tree = {}) {
      * @param {string} childSrc - Child index
      */
     function addChild(src, childSrc) {
-        const item = get(childSrc);
-        if (!item.imported.includes(childSrc) && src != childSrc) {
-            item.imported.push(src);
+        const { imported, src: _src } = get(childSrc);
+        if (!imported.includes(_src) && src != _src) {
+            imported.push(src);
         }
     }
     /**
@@ -45,10 +55,10 @@ export default function createTree(tree = {}) {
      * @return {string[]}
      */
     function getRoots(src, parents = []) {
-        const item = get(src);
+        const { root, imported, src: _src } = get(src);
         const addParent = (src) => !parents.includes(src) && parents.push(src);
-        if (item.root) addParent(src);
-        item.imported.forEach((parentSrc) => {
+        if (root) addParent(_src);
+        imported.forEach((parentSrc) => {
             const item = get(parentSrc);
             item.root && addParent(parentSrc);
             getRoots(parentSrc, parents);
@@ -60,6 +70,7 @@ export default function createTree(tree = {}) {
      * @param {string} src
      */
     function remove(src) {
+        src = id(src);
         if (!tree[src]) return;
         const { imported } = tree[src];
         delete tree[src];
@@ -71,6 +82,7 @@ export default function createTree(tree = {}) {
     }
 
     function graph(src, root = {}, ref = {}) {
+        src = id(src);
         for (const prop in tree) {
             if (tree[prop].imported.includes(src)) {
                 root[prop] = ref[prop] || graph(prop, (ref[prop] = {}), ref);

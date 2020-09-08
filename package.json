@@ -1,6 +1,6 @@
 {
     "name": "@uppercod/imported",
-    "version": "1.2.1",
+    "version": "1.3.0",
     "description": "This script allows to create index relationships",
     "main": "cjs.js",
     "module": "esm.js",

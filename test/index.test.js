@@ -39,3 +39,18 @@ test("Associative record deletion", async (t) => {
     t.is(tree.tree["b"], undefined);
     t.is(tree.tree["b"], undefined);
 });
+
+test("Options", async (t) => {
+    const options = {
+        tree: {},
+        format: (src) => "." + src,
+    };
+
+    const tree = createTree(options);
+
+    tree.add("a");
+
+    tree.addChild("a", "b");
+
+    t.deepEqual(Object.keys(tree.tree), [".a", ".b"]);
+});

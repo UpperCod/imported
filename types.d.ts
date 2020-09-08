@@ -20,5 +20,10 @@ declare module "@uppercod/imported" {
         remove(src: string): void;
     }
 
-    export default function createTree(tree?: Tree): Context;
+    export interface Options {
+        tree: Tree;
+        format?: (src: string) => string;
+    }
+
+    export default function createTree(options?: Options): Context;
 }
